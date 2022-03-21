@@ -7,7 +7,112 @@
     </head>
     <body>
         <h1>My Movie API</h1>
-        <p>This API will provide users with access to information about different movies and the directors and genres of those specific movies. the user will also be able to sign up, update personal information, and create lists of their favorite movies within the app.</p>
+        <p>
+        This API will provide users with access to information about different movies and the directors and genres of those specific movies. the user will also be able to sign up, update personal information, and create lists of their favorite movies within the app.
+        </p>
+
+        <table>
+            <tr>
+                <th>Logic</th>
+                <th>URL</th>
+                <th>Method Type</th>
+                <th>Query Parameters</th>
+                <th>Request Body Data Format</th>
+                <th>Response Body Data Format</th>
+            </tr>
+            <tr>
+                <td>Returns a list of all movies to the user</td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>None</td>
+                <td>JSON object holding data of all movies</td>
+            </tr>
+            <tr>
+                <td>Returns data about a single movie by title to the user</td>
+                <td>/movies/:title</td>
+                <td>GET</td>
+                <td>:title</td>
+                <td>None</td>
+                <td>
+                    JSON object holding data about a specific movie (e.g. description, genre, director, IMG, and featured)    
+                </td>
+            </tr>
+            <tr>
+                <td>Returns data about a genre by name/title (e.g. "thriller")</td>
+                <td>/movies/genres/:genre</td>
+                <td>GET</td>
+                <td>:genre</td>
+                <td>None</td>
+                <td>JSON object holding data about a specific genre</td>
+            </tr>
+            <tr>
+                <td>Returns data about a specific director</td>
+                <td>/movies/directors/:directorName</td>
+                <td>GET</td>
+                <td>:directorName</td>
+                <td>None</td>
+                <td>
+                    JSON Object holding data about a specific director (e.g. Bio, birth year, death year)
+                </td>
+            </tr>
+            <tr>
+                <td>Allow new users to register</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>None</td>
+                <td>
+                    JSON object: <br>
+                   Example: { <br>
+                       Username: <br>
+                       Password: <br>
+                       Email: <br>
+                   }
+                </td>
+                <td>
+                    JSON object about user added: <br>
+                    Example: { <br>
+                        Username: <br>
+                        Password: <br>
+                        Email: <br>
+                        ID: <br>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Allows users to update their user info</td>
+                <td>/users/:username</td>
+                <td>PUT</td>
+                <td>:username</td>
+                <td>JSON object with updated info</td>
+                <td>JSON object showing updated info</td>
+            </tr>
+            <tr>
+                <td>Allows users to add a movie to their favorites list</td>
+                <td>/users/:username/favorites/:title</td>
+                <td>POST</td>
+                <td>:username, :title</td>
+                <td>JSON object with move title to add to favorites list</td>
+                <td>JSON object showing movie title added in favorites list</td>     
+            </tr>
+            <tr>
+                <td>Allow users to delete a movie from their favorites list</td>
+                <td>/users/:username/favorites/:title</td>
+                <td>DELETE</td>
+                <td>:username, :title</td>
+                <td>JSON object with movie title to delete from their favorites list</td>
+                <td>JSON object with the movie title removed from their favorites list</td>
+            </tr>
+            <tr>
+                <td>Allow existing users to deregister</td>
+                <td>/users/:username</td>
+                <td>DELETE</td>
+                <td>:username</td>
+                <td>None</td>
+                <td>Confirmation text that account was deleted (200 if successful or 400 if failed</td>
+            </tr>
+        </table>
+
     </body>
 </html>
 
