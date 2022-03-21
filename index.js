@@ -31,61 +31,66 @@ app.get('/movies/directors/:directorName', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-    const newUser = req.body;
+    res.status(200).send('Successful POST request adding new user.');
+    // const newUser = req.body;
 
-    if (!newUser.name) {
-        newUser.id = uuid.v4();
-        users.push(newUser);
-        res.status(201).send(newUser);
-    } else {
-        const message = ('Please enter a username');
-        res.status(400).send(message);
-    }
+    // if (!newUser.name) {
+    //     newUser.id = uuid.v4();
+    //     users.push(newUser);
+    //     res.status(201).send(newUser);
+    // } else {
+    //     const message = ('Please enter a username');
+    //     res.status(400).send(message);
+    // }
 });
 
 app.put('/users/:username', (req, res) => {
-    const newUsername = req.body;
-    let user = users.find((user) => { return user.username === req.params.username });
+    res.status(201).send('Successful PUT request updating client username');
+    // const newUsername = req.body;
+    // let user = users.find((user) => { return user.username === req.params.username });
 
-    if (user) {
-        user.username = newUsername.username;
-        res.status(201).json(user)
-    } else {
-        res.status(400).send('Unable to update username.');
-    }
+    // if (user) {
+    //     user.username = newUsername.username;
+    //     res.status(201).json(user)
+    // } else {
+    //     res.status(400).send('Unable to update username.');
+    // }
 });
 
 app.post('/users/:username/favorites/:movie', (req, res) => {
-    let user = users.find((user) => { return user.username === req.params.username });
+    res.send('Successful POST request adding a movie to favorites list');
+    // let user = users.find((user) => { return user.username === req.params.username });
 
-    if (user) {
-        user.favorites.push(req.params.movie);
-        res.status(200).send(req.params.movie + ' was added to your favorites list.');
-    } else {
-        res.status(400).send('Unable to add to favorites.')
-    };
+    // if (user) {
+    //     user.favorites.push(req.params.movie);
+    //     res.status(200).send(req.params.movie + ' was added to your favorites list.');
+    // } else {
+    //     res.status(400).send('Unable to add to favorites.')
+    // };
 });
 
-app.delete('users/:username/favorites/:movie', (req, res) => {
-    let user = users.find((user) => { return user.username === req.params.username });
+app.delete('/users/:username/favorites/:movie', (req, res) => {
+    res.send('Successful DELETE request showing movie has been removed from favorites list');
+    // let user = users.find((user) => { return user.username === req.params.username });
 
-    if (user) {
-        user.favorites = user.favorites.filter((mov) => { return mov !== req.params.movie });
-        res.status(200).send(req.params.movie + ' was removed from your favorites list');
-      } else {
-        res.status(400).send('Unable to remove from favorites.')
-      };
+    // if (user) {
+    //     user.favorites = user.favorites.filter((mov) => { return mov !== req.params.movie });
+    //     res.status(200).send(req.params.movie + ' was removed from your favorites list');
+    //   } else {
+    //     res.status(400).send('Unable to remove from favorites.')
+    //   };
 });
 
 app.delete('/users/:username', (req, res) => {
-    let user = users.find((user) => { return user.username === req.params.username });
+    res.send('Successful DELETE request with a message notifying user account has been deleted');
+//     let user = users.find((user) => { return user.username === req.params.username });
 
-    if (user) {
-        users = users.filter((user) => { return user.username !== req.params.username });
-        res.status(201).send(req.params.username + ' was deleted.');
-    } else {
-        res.status(404).send('User not found.');
-  }
+//     if (user) {
+//         users = users.filter((user) => { return user.username !== req.params.username });
+//         res.status(201).send(req.params.username + ' was deleted.');
+//     } else {
+//         res.status(404).send('User not found.');
+//   }
 });
 
 
