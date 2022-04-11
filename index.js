@@ -2,6 +2,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     uuid = require('uuid');
 
+const { check, validationResult } = require('express-validator');
 const morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
@@ -26,6 +27,7 @@ let auth = require('./auth')(app);
 
 const passport = require('passport');
 require('./passport');
+
 
 app.use(bodyParser.json());
 
@@ -93,7 +95,21 @@ app.get('/directors/:Name', passport.authenticate('jwt', { session: false }), (r
     Email: String,
     Birthdate: Date
 }*/
-app.post('/users', (req, res) => {
+app.post('/users',
+    [
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email is not valid').isEmail()
+    ], (req, res) => {
+
+        // check the validation object for errors
+        let errors = validationResults(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+
     let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
         .then((user) => {
@@ -206,6 +222,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Oops! Something Broke!');
 });
 
-app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+    console.log('Listening on Port ' + port);
 });
